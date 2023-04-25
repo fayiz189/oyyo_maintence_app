@@ -4,8 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oyyo_maintence_app/Loging/login.dart';
 import 'package:oyyo_maintence_app/Navpages/complaint.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:intl/intl.dart';
+
+import '../const.dart';
 
 var w;
 var mainColor= Color(0xFF084586);
@@ -19,7 +21,29 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
 
+var result;
 
+
+getAll() {
+  Stream stream =
+  FirebaseFirestore.instance.collection('complaints').where("staff",isEqualTo: currentUserID)
+      .where("status",whereIn: [4,5]).snapshots();
+  return stream;
+}
+
+getBySort(){
+  Stream stream = FirebaseFirestore.instance
+      .collection('complaints').
+      where("staff",isEqualTo: currentUserID).
+      where("status", whereIn: [4,5])
+      .where("createdDate", isGreaterThanOrEqualTo: result.start)
+      .where('createdDate', isLessThanOrEqualTo: DateTime(result.end.year, result.end.month,
+          result.end.day, 23, 59, 59)).snapshots();
+
+
+   return stream;
+
+}
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +70,51 @@ class _HistoryState extends State<History> {
                 SizedBox(
                   height: w * 0.04,
                 ),
-                Text(
-                  "HISTORY",
-                  style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700, fontSize: w * 0.05),
+                Row(
+                  children: [
+                    Text(
+                      "HISTORY",
+                      style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700, fontSize: w * 0.05),
+                    ),
+                    SizedBox(width: scrWidth* 0.10),
+                    TextButton(
+                      onPressed: () async {
+                        DateTime now = DateTime.now();
+                        result = await showDateRangePicker(
+                          context: context,
+                          firstDate: DateTime(2022, 11, 1),
+                          lastDate: DateTime(now.year, now.month, now.day),
+                        );
+                        setState(() {
+
+                        });
+                      },
+                      child: Text(
+                        result == null
+                            ? '${DateFormat('MMMM').format(DateTime.now())}  Click to change date'
+                            : "${result.start.day}" +
+                            "/" +
+                            "${result.start.month}" +
+                            "/" +
+                            "${result.start.year}" +
+                            " to " +
+                            "${result.end.day}" +
+                            "/" +
+                            "${result.end.month}" +
+                            "/${result.end.year}" +
+                            "  Click to change date",
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: w * 0.06,
                 ),
                 StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance.collection("complaints")
-                        .where("staff",isEqualTo: currentUserID)
-                        .where("status",isEqualTo: 4)
-                        .snapshots(),
+                    stream:  result != null ?getBySort() :getAll(),
                     builder: (context, snapshot) {
                       print(currentUserID);
                       if(!snapshot.hasData){

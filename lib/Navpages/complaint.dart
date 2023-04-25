@@ -1,3 +1,4 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,6 +11,7 @@ import 'package:image_viewer/image_viewer.dart';
 import 'package:intl/intl.dart';
 import 'package:oyyo_maintence_app/Loging/login.dart';
 import 'package:oyyo_maintence_app/Navpages/maintenanceList.dart';
+import 'package:oyyo_maintence_app/Navpages/productWidget.dart';
 import 'package:oyyo_maintence_app/main.dart';
 import 'package:oyyo_maintence_app/utils/audio_player.dart';
 import 'package:just_audio/just_audio.dart' as ap;
@@ -30,6 +32,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
   var file;
   String? imgUrl;
   bool imageupload=false;
+  List<Map<String,dynamic>>  inventory = [];
+  Map<String, dynamic> productDatabyName = {};
 
 
   final List _selectedImages = [];
@@ -59,9 +63,43 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
       });
     }
   }
+  List products = [];
+  List<String> productsList = [];
+  getProducts(){
+    FirebaseFirestore.instance.collectionGroup('stock').where('headId',isEqualTo: '1001' ).snapshots().listen((event) {
+      for(var doc in event.docs){
+
+        products.add(doc.data());
+        productsList.add(doc.get('productName'));
+        productDatabyName[doc.get('productName')] = doc.data();
+        
+
+      }
+      if (mounted) {
+       setState(() {
+
+       });
+      }
+
+      print(products);
+
+    });
+  }
+ final productController = TextEditingController();
+ final quantity = TextEditingController();
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -551,6 +589,175 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                             ],
                                           ),
                                         ) : SizedBox(),
+
+
+                                        SizedBox(height: 20,),
+                                        Container(
+                                          margin: const EdgeInsets.only(left: 40),
+                                          height: 55,
+                                          width: 300,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 2,
+                                                color: Color(0x4D101213),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: CustomDropdown.search(
+                                            hintText: 'Choose a Product',
+                                            hintStyle: const TextStyle(),
+                                            items: productsList,
+                                            controller: productController,
+                                            excludeSelected: false,
+                                            onChanged: (text) {
+                                              ////////////
+
+                                              setState(() {});
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(height: 20,),
+                                        Container(
+                                          margin: const EdgeInsets.only(left: 40),
+                                          height: 55,
+                                          width: 300,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 2,
+                                                color: Color(0x4D101213),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: CustomDropdown.search(
+                                            hintText: 'Choose a quantity',
+                                            hintStyle: const TextStyle(),
+                                            items: productController.text.isEmpty ? ['0'] :
+                                            List.generate(productDatabyName[productController.text]['quantity'], (index) => '${index+1}') ,
+                                            controller: quantity,
+                                            excludeSelected: false,
+                                            onChanged: (text) {
+                                              ////////////
+
+                                              setState(() {});
+                                            },
+                                          ),
+                                        ),
+                                        // Padding(
+                                        //   padding: EdgeInsets.only(left: 20,right: 20),
+                                        //   child: TextFormField(
+                                        //     controller: quantity,
+                                        //     maxLines: 3,
+                                        //     obscureText: false,
+                                        //     validator: (value) {
+                                        //       if (value!.isEmpty) {
+                                        //         return 'Please Enter quanitity';
+                                        //       }
+                                        //     },
+                                        //     decoration: InputDecoration(
+                                        //       labelText: 'quantity',
+                                        //       labelStyle: TextStyle(
+                                        //           fontFamily: 'Montserrat',
+                                        //           color: Color(0xFF8B97A2),
+                                        //           fontWeight: FontWeight.bold,
+                                        //           fontSize: 12
+                                        //       ),
+                                        //       hintText: 'Please Enter quantity',
+                                        //       hintStyle: TextStyle(
+                                        //           fontFamily: 'Montserrat',
+                                        //           color: Color(0xFF8B97A2),
+                                        //           fontWeight: FontWeight.bold,
+                                        //           fontSize: 12
+                                        //
+                                        //       ),
+                                        //       enabledBorder:
+                                        //       UnderlineInputBorder(
+                                        //         borderSide: BorderSide(
+                                        //           color: Colors.transparent,
+                                        //           width: 1,
+                                        //         ),
+                                        //         borderRadius:
+                                        //         const BorderRadius.only(
+                                        //           topLeft:
+                                        //           Radius.circular(4.0),
+                                        //           topRight:
+                                        //           Radius.circular(4.0),
+                                        //         ),
+                                        //       ),
+                                        //       focusedBorder:
+                                        //       UnderlineInputBorder(
+                                        //         borderSide: BorderSide(
+                                        //           color: Colors.transparent,
+                                        //           width: 1,
+                                        //         ),
+                                        //         borderRadius:
+                                        //         const BorderRadius.only(
+                                        //           topLeft:
+                                        //           Radius.circular(4.0),
+                                        //           topRight:
+                                        //           Radius.circular(4.0),
+                                        //         ),
+                                        //       ),
+                                        //     ),
+                                        //     style: TextStyle(
+                                        //         fontFamily: 'Montserrat',
+                                        //         color: Colors.black,
+                                        //         fontWeight: FontWeight.bold,
+                                        //         fontSize: 13
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(50),
+                                          child: TextButton(onPressed: (){
+
+                                            inventory.add({
+
+                                              "productName" : productController.text,
+                                              "productId" : productDatabyName[productController.text]['productId'],
+                                              "quantity" : int.tryParse(quantity.text),
+
+                                            });
+                                            setState(() {
+
+                                            });
+
+
+                                          }, child: Text('add')),
+                                        ),
+
+                                        Container(
+                                          color: Colors.red,
+                                          width: double.infinity,
+                                          height: 300,
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: inventory.length,
+                                            itemBuilder: (context, index) {
+                                            return Container(
+
+                                              width: 100,
+                                              height: 100,
+                                              child: Row(
+
+                                                children: [
+                                                  Text(inventory[index]['productName']),
+                                                  SizedBox(width: 15,),
+                                                  Text(inventory[index]['quantity'].toString())
+                                                ],
+                                              ),
+                                            );
+                                          },),
+                                        ),
+                                        SizedBox(height: 10,),
+
                                         Row(
                                           children: [
                                             data['status'] == 2
@@ -677,6 +884,19 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
 
                                                           if(proceed){
 
+                                                              FirebaseFirestore.instance.collectionGroup('stock').where('headId',isEqualTo: '1001' ).get().then((value) {
+                                                                for(var doc in value.docs){
+                                                                  for(var a in inventory){
+                                                                    if(a['productId']==doc.data()['productId']){
+                                                                      doc.reference.update({
+                                                                        "quantity":FieldValue.increment(-a['quantity'])
+                                                                      });
+                                                                    }
+                                                                  }
+                                                                }
+                                                              });
+
+
 
                                                             FirebaseFirestore
                                                                 .instance
@@ -689,10 +909,12 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                                   "status": 4,
                                                                   "endDate" : DateTime.now(),
                                                                   "workerImage": _selectedImages,
+                                                                  "inventoryList" : inventory,
 
                                                                 });
                                                             setState(() {});
                                                             showUploadMessage(context, 'Work completed!',);
+                                                            Navigator.pop(context);
 
                                                           }
 
