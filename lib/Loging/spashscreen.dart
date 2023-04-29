@@ -14,12 +14,15 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   void initState(){
+
     super.initState();
     Timer(Duration(seconds: 4), () async {
       var prefs = await SharedPreferences.getInstance();
       if (prefs.containsKey("uid")) {
         currentUserID=prefs.getString("uid")!;
+        currentUserHeadId=prefs.getString("headId")!;
         print("id $currentUserID");
+        print("headId $currentUserHeadId");
         // print(prefs.get('email'));
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
       }

@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 String currentUserID='';
 String currentUserName='';
 String currentUserEmail='';
+String currentUserHeadId = '';
 
 
 class login extends StatefulWidget {
@@ -38,12 +39,15 @@ print("test");
     }else{
       var prefs = await SharedPreferences.getInstance();
         prefs.setString('uid', users.docs[0].id);
-        print("id $currentUserID");
+        prefs.setString('headId', users.docs[0]['headId']);
+
 
       DocumentSnapshot data=users.docs[0];
       currentUserEmail=data.get('email');
       currentUserID=data.id;
       currentUserName=data.get('name');
+      currentUserHeadId = data.get('headId');
+      
       setState(() {
 
       });
