@@ -76,7 +76,7 @@ class _FirstPageState extends State<FirstPage> {
                       itemCount:data.length,itemBuilder:(context, index) {
                       return // Generated code for this Container Widget...
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(w*0.02, w*0.02, w*0.02, 0),
                           child: InkWell(
                             child: Container(
                                 width: double.infinity,
@@ -84,9 +84,9 @@ class _FirstPageState extends State<FirstPage> {
                                   color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
-                                      blurRadius: 4,
-                                      color: Color(0x33000000),
-                                      offset: Offset(0, 2),
+                                      blurRadius: 5,
+                                      color:Colors.black26,
+                                       offset: Offset(0, 2),
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(16),
@@ -98,7 +98,7 @@ class _FirstPageState extends State<FirstPage> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                                            padding: EdgeInsetsDirectional.fromSTEB(w*0.03, w*0.015, w*0.02, 0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +117,7 @@ class _FirstPageState extends State<FirstPage> {
                                                       TextStyle(
                                                         fontFamily: 'Lexend Deca',
                                                         color: Color(0xFF355967),
-                                                        fontSize: 13,
+                                                        fontSize: w*0.029,
                                                         fontWeight: FontWeight.w500,
                                                       ),
                                                     ),
@@ -127,7 +127,7 @@ class _FirstPageState extends State<FirstPage> {
                                                       TextStyle(
                                                         fontFamily: 'Lexend Deca',
                                                         color: Color(0xFF090F13),
-                                                        fontSize: 15,
+                                                        fontSize: w*0.038,
                                                         fontWeight: FontWeight.w500,
                                                       ),
                                                     ),
@@ -142,8 +142,8 @@ class _FirstPageState extends State<FirstPage> {
                                                   child: Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                                                     child: Container(
-                                                      width: 50,
-                                                      height: 50,
+                                                      width: w*0.12,
+                                                      height: w*0.12,
                                                       clipBehavior: Clip.antiAlias,
                                                       decoration: BoxDecoration(
                                                         shape: BoxShape.circle,
@@ -157,7 +157,7 @@ class _FirstPageState extends State<FirstPage> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 3),
+                                            padding: EdgeInsetsDirectional.fromSTEB(w*0.038, 4, w*0.02, 3),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -167,7 +167,7 @@ class _FirstPageState extends State<FirstPage> {
                                                     style: TextStyle(
                                                       fontFamily: 'Lexend Deca',
                                                       color: Color(0xFF95A1AC),
-                                                      fontSize: 14,
+                                                      fontSize: w*0.04,
                                                       fontWeight: FontWeight.normal,
                                                     ),
                                                   ),
@@ -176,7 +176,7 @@ class _FirstPageState extends State<FirstPage> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
+                                            padding: EdgeInsetsDirectional.fromSTEB(w*0.038, 0, w*0.02, 12),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -186,12 +186,12 @@ class _FirstPageState extends State<FirstPage> {
                                                     style: TextStyle(
                                                       fontFamily: 'Lexend Deca',
                                                       color: Color(0xFF95A1AC),
-                                                      fontSize: 14,
+                                                      fontSize: w*0.04,
                                                       fontWeight: FontWeight.normal,
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(width: 20,),
+                                                SizedBox(width: w*0.025,),
                                          data[index]['status'] == 6 ?       Expanded(
                                                   child:Text(
                                                     'Re requested',
@@ -210,7 +210,7 @@ class _FirstPageState extends State<FirstPage> {
                                                 Icon(
                                                   Icons.arrow_forward_ios,
                                                   color: Colors.black,
-                                                  size: 20,
+                                                  size: w*0.055,
                                                 ),
                                               ],
                                             ),

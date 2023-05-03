@@ -170,8 +170,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                     return Stack(
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 220,
+                          // width: MediaQuery.of(context).size.width,
+                          height: w*0.58,
                           decoration: BoxDecoration(color: mainColor),
                           child: Padding(
                             padding:
@@ -186,8 +186,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           2, 2, 2, 2),
                                       child: Container(
-                                        width: 42,
-                                        height: 42,
+                                        width: w*0.09,
+                                        height: w*0.09,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           shape: BoxShape.circle,
@@ -199,20 +199,20 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                           child: Icon(
                                             Icons.arrow_back_ios_outlined,
                                             color: Colors.black,
-                                            size: 21,
+                                            size: w*0.06,
                                           ),
                                         ),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
+                                          w*0.038, 0, 0, 0),
                                       child: Text(
                                         data!['complaint'],
                                         style: TextStyle(
                                           fontFamily: 'Lexend Deca',
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: w*0.05 ,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -230,7 +230,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           color: Colors.white,
-                                          fontSize: 20,
+                                          fontSize: w*0.055,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -244,11 +244,11 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        'floorName',
+                                  data!['floorName'],
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           color: Colors.white,
-                                          fontSize: 14,
+                                          fontSize: w*0.039,
                                           fontWeight: FontWeight.normal,
                                         ),
                                       ),
@@ -267,6 +267,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                         style: GoogleFonts.inter(
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white,
+                                          fontSize: w*0.039
                                         ),
                                       )
                                     ],
@@ -299,7 +300,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 190, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, w*0.5, 0, 0),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
@@ -323,7 +324,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      20, 16, 20, 0),
+                                      w*0.036, w*0.038, w*0.036, 0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -331,14 +332,14 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                       Expanded(
                                         child: Padding(
                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                              12, 0, 0, 0),
+                                              w*0.02, 0, 0, 0),
                                           child: Text(
                                             'Created Date : ${DateFormat('dd-MM-yyyy').format(data['createdDate'].toDate()).toString()}',
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               color: mainColor,
-                                              fontSize: 15,
+                                              fontSize: w*0.033,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -361,7 +362,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            height: 350,
+                                            height: w*0.8,
                                             width: double.infinity,
                                             decoration: BoxDecoration(
                                                 borderRadius:
@@ -380,7 +381,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                             color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            fontSize: 20),
+                                                            fontSize: w*0.05),
                                                       ),
                                                     ],
                                                   ),
@@ -396,7 +397,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                             color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            fontSize: 20),
+                                                            fontSize: w*0.05),
                                                       ),
                                                     ],
                                                   ),
@@ -412,7 +413,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                             color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            fontSize: 20),
+                                                            fontSize: w*0.05),
                                                       ),
                                                     ],
                                                   ),
@@ -425,8 +426,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                   Wrap(
                                                     children: [
                                                       Container(
-                                                        height: 150,
-                                                        width: 400,
+                                                        height: w*0.4,
+                                                        width: w*0.8,
                                                         child: ListView.builder(
                                                           scrollDirection:
                                                               Axis.horizontal,
@@ -440,12 +441,13 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                                   const EdgeInsets
                                                                       .all(8.0),
                                                               child: Container(
-                                                                height: 75,
-                                                                width: 75,
+                                                                height: w*0.02,
+                                                                width:w*0.4,
+                                                                 // decoration: BoxDecoration(borderRadius:BorderRadius.circular(20),),
                                                                 child: InkWell(
                                                                   child: Image.network(
                                                                       data['images']
-                                                                          [index]),
+                                                                          [index], fit: BoxFit.fitWidth,),
                                                                   onTap: () {
                                                                     MultiImageProvider multiImageProvider =
                                                                     MultiImageProvider(List.generate(data['images'].length,
@@ -480,7 +482,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                 style: TextStyle(
                                                   fontFamily: 'Outfit',
                                                   color: mainColor,
-                                                  fontSize: 15,
+                                                  fontSize: w*0.037,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -489,9 +491,10 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
 
                                           SizedBox(height: w*0.03,),
 
-                                      data['status'] == 4?     Container(
-                                            height: 100,
-                                            width: 250,
+                                      data['status'] == 4?
+                                      Container(
+                                            height: w*0.38,
+                                            width: w*0.8,
                                             decoration: BoxDecoration(
                                                 color: mainColor,
                                                 borderRadius:
@@ -506,12 +509,12 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                 itemBuilder:
                                                     (context, index) =>
                                                     Container(
-                                                      height: 70,
-                                                      width: 100,
+                                                      height: w*0.1,
+                                                      width: w*0.3,
                                                       child: InkWell(
                                                         child: Image.network(
                                                             data['workerImage'][
-                                                            index]),
+                                                            index],fit: BoxFit.contain),
                                                         onTap: () {
                                                           MultiImageProvider multiImageProvider =
                                                           MultiImageProvider(List.generate( data['workerImage'].length,
@@ -522,17 +525,15 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                       ),
                                                     )),
                                           ) :SizedBox(),
-
                                           Container(
                                             padding: EdgeInsets.all(10),
                                             margin: EdgeInsets.only(
                                                 left: 17, right: 17),
                                             decoration: BoxDecoration(
-                                              color: Colors.white,
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
-                                            height: 250,
+                                            height: w*0.3,
                                             child: ListView.builder(
                                                 shrinkWrap: true,
                                                 scrollDirection: Axis.vertical,
@@ -580,8 +581,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                             child: Row(
                                               children: [
                                                 Container(
-                                                  height: 100,
-                                                  width: 230,
+                                                  height: w*0.3,
+                                                  width: w*0.60,
                                                   decoration: BoxDecoration(
                                                       color: mainColor,
                                                       borderRadius:
@@ -596,12 +597,13 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                       itemBuilder:
                                                           (context, index) =>
                                                               Container(
-                                                                height: 70,
-                                                                width: 100,
+                                                                height: w*0.3,
+                                                                width: w*0.3,
+                                                                 // color: Colors.red,
                                                                 child: InkWell(
                                                                   child: Image.network(
                                                                       _selectedImages[
-                                                                          index]),
+                                                                          index],fit: BoxFit.fitHeight),
                                                                   onTap: () {
                                                                     MultiImageProvider multiImageProvider =
                                                                     MultiImageProvider(List.generate( _selectedImages.length,
@@ -625,12 +627,12 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                     _pickImage();
                                                   },
                                                   child: CircleAvatar(
-                                                    radius: 30,
+                                                    radius: w*0.075,
                                                     backgroundColor: mainColor,
                                                     child: SvgPicture.asset(
                                                         'assets/images/camIcon.svg',
                                                         color: Colors.white,
-                                                        height: w * 0.035),
+                                                        height: w * 0.05),
                                                   ),
                                                 ),
                                               ],
@@ -644,8 +646,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                               SizedBox(height: 20,),
                                               Container(
                                                 margin: const EdgeInsets.only(left: 40 ,right: 40),
-                                                height: 55,
-                                                width: 300,
+                                                height: w*0.14,
+                                                width: w*0.8,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   boxShadow: const [
@@ -685,8 +687,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                               SizedBox(height: 20,),
                                               Container(
                                                 margin: const EdgeInsets.only(left: 40,right: 40),
-                                                height: 55,
-                                                width: 300,
+                                                height: w*0.14,
+                                                width: w*0.8,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   boxShadow: const [
@@ -854,7 +856,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
 
                                                 }, child: Text('Add')),
                                               ),
-                                              SizedBox(height: 20,),
+                                              SizedBox(height: w*0.025,),
 
                                               Container(
                                                 decoration: BoxDecoration(
@@ -863,47 +865,62 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                 ),
 
                                                 width: double.infinity,
-                                                height: 300,
+                                                height: w*0.78,
                                                 child: ListView.builder(
                                                   scrollDirection: Axis.vertical,
                                                   itemCount: inventoryList!.docs.length,
                                                   itemBuilder: (context, index) {
                                                     return Container(
-
-                                                      width: 100,
+                                                      width: w*0.1,
                                                       height: 50,
+                                                      // color: Colors.black,
                                                       child: Padding(
                                                         padding: EdgeInsets.all(15),
                                                         child: Row(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
                                                           children: [
-
-                                                            Text('${index +1}.',style: TextStyle(color: Colors.white,fontSize: 20),),
-                                                            SizedBox(width: 15,),
+                                                            Text('${index +1}.',style: TextStyle(color: Colors.white,fontSize: w*0.045),),
+                                                            // SizedBox(width: 15,),
                                                             Text(inventoryList!.docs[index]['productName'],style: TextStyle(color: Colors.white),),
-                                                            SizedBox(width: 35,),
+                                                            // SizedBox(width: 40,),
                                                             Text(inventoryList!.docs[index]['quantity'].toString(),style: TextStyle(color: Colors.white),),
-                                                            SizedBox(width: 15,),
+                                                            // SizedBox(width: 15,),
                                                             Text(inventoryList!.docs[index]['price'].toString(),style: TextStyle(color: Colors.white),),
 
-                                                            IconButton(onPressed: (){
-                                                            print('aaa');
-                                                            int qty =inventoryList!.docs[index]['quantity'];
-                                                            for(var a in stockSnapshot!.docs){
-                                                              if(inventoryList!.docs[index]['productId']==a['productId']){
-                                                                a.reference.update({
-                                                                  "quantity":FieldValue.increment(qty)
+                                                            IconButton(onPressed: () async {
+                                                              bool proceed = await alert(
+                                                                  context,
+                                                                  'Do You want Delete ?');
+
+                                                              if (proceed) {
+                                                                int qty = inventoryList!
+                                                                    .docs[index]['quantity'];
+                                                                for (var a in stockSnapshot!
+                                                                    .docs) {
+                                                                  if (inventoryList!
+                                                                      .docs[index]['productId'] ==
+                                                                      a['productId']) {
+                                                                    a.reference
+                                                                        .update(
+                                                                        {
+                                                                          "quantity": FieldValue
+                                                                              .increment(
+                                                                              qty)
+                                                                        }
+                                                                    );
+                                                                  }
                                                                 }
-                                                                );
+                                                                inventoryList!
+                                                                    .docs[index]
+                                                                    .reference
+                                                                    .delete();
+                                                                productController
+                                                                    .clear();
+                                                                quantity
+                                                                    .clear();
                                                               }
                                                             }
-                                                            inventoryList!.docs[index].reference.delete();
-                                                            productController.clear();
-                                                            quantity.clear();
-
-
-                                                          }
                                                               , icon: Icon(Icons.delete,color: Colors.red,size: 20,)),
                                                           ],
                                                         ),
@@ -922,8 +939,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                               data['status'] == 2
                                                   ? InkWell(
                                                       child: Container(
-                                                        height: 50,
-                                                        width: 180,
+                                                        height: w*0.1,
+                                                        width: w*0.38,
                                                         decoration: BoxDecoration(
                                                           color: Colors.red,
                                                           borderRadius:
@@ -940,7 +957,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                                   color: Colors
                                                                       .white,
                                                                   fontSize:
-                                                                      w * 0.02)),
+                                                                      w * 0.045)),
                                                         ),
                                                       ),
                                                       onTap: () async {
@@ -1005,13 +1022,13 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                               )
                                                   : SizedBox(),
                                               SizedBox(
-                                                width: 30,
+                                                width: w*0.04,
                                               ),
                                               data['status'] == 3
                                                   ? InkWell(
                                                       child: Container(
-                                                        height: w * 0.07,
-                                                        width: w * 0.15,
+                                                        height: w * 0.09,
+                                                        width: w * 0.38,
                                                         decoration: BoxDecoration(
                                                           color: mainColor,
                                                           borderRadius:
@@ -1019,19 +1036,18 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                                   .circular(15),
                                                         ),
                                                         child: Center(
-                                                          child: Text("End work ",
+                                                          child: Text(" Work Completed",
                                                               style: GoogleFonts.inter(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700,
                                                                   color: Colors
-                                                                      .white,
+                                                                      .greenAccent,
                                                                   fontSize:
-                                                                      w * 0.02)),
+                                                                      w * 0.03)),
                                                         ),
                                                       ),
                                                       onTap: () async {
-
                                                         bool proceed = await alert(
                                                             context, 'Do You want to End Work?');
 

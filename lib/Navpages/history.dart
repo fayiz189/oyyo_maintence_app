@@ -72,46 +72,68 @@ getBySort(){
                 ),
                 Row(
                   children: [
-                    Text(
-                      "HISTORY",
-                      style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700, fontSize: w * 0.05),
+                    Column(
+                      children: [
+                        Text(
+                          "HISTORY",
+                          style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700, fontSize: w * 0.05),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: scrWidth* 0.10),
-                    TextButton(
-                      onPressed: () async {
-                        DateTime now = DateTime.now();
-                        result = await showDateRangePicker(
-                          context: context,
-                          firstDate: DateTime(2022, 11, 1),
-                          lastDate: DateTime(now.year, now.month, now.day),
-                        );
-                        setState(() {
-
-                        });
-                      },
-                      child: Text(
-                        result == null
-                            ? '${DateFormat('MMMM').format(DateTime.now())}  Click to change date'
-                            : "${result.start.day}" +
-                            "/" +
-                            "${result.start.month}" +
-                            "/" +
-                            "${result.start.year}" +
-                            " to " +
-                            "${result.end.day}" +
-                            "/" +
-                            "${result.end.month}" +
-                            "/${result.end.year}" +
-                            "  Click to change date",
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ),
+                    SizedBox(width: scrWidth* 0.22),
                   ],
                 ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, w*0.05, 0, 0),
+                      child: Row(
+                        children: [
+                          TextButton(
+                            onPressed: () async {
+                              DateTime now = DateTime.now();
+                              result = await showDateRangePicker(
+                                context: context,
+                                firstDate: DateTime(2022, 11, 1),
+                                lastDate: DateTime(now.year, now.month, now.day),
+                              );
+                              setState(() {
+
+                              });
+                            },
+                            child: Text(
+                              result == null
+                                  ? '${DateFormat('MMMM').format(DateTime.now())}  Click to change date'
+                                  : "${result.start.day}" +
+                                  "/" +
+                                  "${result.start.month}" +
+                                  "/" +
+                                  "${result.start.year}" +
+                                  " to " +
+                                  "${result.end.day}" +
+                                  "/" +
+                                  "${result.end.month}" +
+                                  "/${result.end.year}" +
+                                  "  Click to change date",
+                              style: TextStyle(fontSize: w*0.03,color: Colors.white70),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down_outlined,
+                            color: Colors.red,
+                            size: w*0.055,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+
                 SizedBox(
-                  height: w * 0.06,
+                  height: w * 0.04,
                 ),
                 StreamBuilder<QuerySnapshot>(
                     stream:  result != null ?getBySort() :getAll(),
@@ -130,7 +152,7 @@ getBySort(){
                         itemCount:data.length,itemBuilder:(context, index) {
                         return // Generated code for this Container Widget...
                           Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(w*0.02, w*0.02, w*0.02, 0),
                               child: InkWell(
                                 child: Container(
                                   width: double.infinity,
@@ -138,8 +160,8 @@ getBySort(){
                                     color: Colors.white,
                                     boxShadow: [
                                       BoxShadow(
-                                        blurRadius: 4,
-                                        color: Color(0x33000000),
+                                        blurRadius: 5,
+                                        color: Colors.black26,
                                         offset: Offset(0, 2),
                                       )
                                     ],
@@ -152,7 +174,7 @@ getBySort(){
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                                            padding: EdgeInsetsDirectional.fromSTEB(w*0.02, w*0.02, w*0.02, 0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,7 +193,7 @@ getBySort(){
                                                       TextStyle(
                                                         fontFamily: 'Lexend Deca',
                                                         color: Color(0xFF355967),
-                                                        fontSize: 13,
+                                                        fontSize: w*0.028,
                                                         fontWeight: FontWeight.w500,
                                                       ),
                                                     ),
@@ -181,7 +203,7 @@ getBySort(){
                                                       TextStyle(
                                                         fontFamily: 'Lexend Deca',
                                                         color: Color(0xFF090F13),
-                                                        fontSize: 15,
+                                                        fontSize:  w*0.038,
                                                         fontWeight: FontWeight.w500,
                                                       ),
                                                     ),
@@ -196,8 +218,8 @@ getBySort(){
                                                   child: Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                                                     child: Container(
-                                                      width: 50,
-                                                      height: 50,
+                                                      width:  w*0.13,
+                                                      height:  w*0.13,
                                                       clipBehavior: Clip.antiAlias,
                                                       decoration: BoxDecoration(
                                                         shape: BoxShape.circle,
@@ -211,7 +233,7 @@ getBySort(){
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 3),
+                                            padding: EdgeInsetsDirectional.fromSTEB(w*0.038, 4, w*0.02, 3),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -221,7 +243,7 @@ getBySort(){
                                                     style: TextStyle(
                                                       fontFamily: 'Lexend Deca',
                                                       color: Color(0xFF95A1AC),
-                                                      fontSize: 14,
+                                                      fontSize: w*0.04,
                                                       fontWeight: FontWeight.normal,
                                                     ),
                                                   ),
@@ -230,7 +252,7 @@ getBySort(){
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
+                                            padding: EdgeInsetsDirectional.fromSTEB(w*0.038, 0, w*0.02, 12),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -240,7 +262,7 @@ getBySort(){
                                                     style: TextStyle(
                                                       fontFamily: 'Lexend Deca',
                                                       color: Color(0xFF95A1AC),
-                                                      fontSize: 14,
+                                                      fontSize: w*0.04,
                                                       fontWeight: FontWeight.normal,
                                                     ),
                                                   ),
@@ -248,7 +270,7 @@ getBySort(){
                                                 Icon(
                                                   Icons.arrow_forward_ios,
                                                   color: Colors.black,
-                                                  size: 20,
+                                                  size: w*0.055,
                                                 ),
                                               ],
                                             ),
@@ -367,8 +389,6 @@ getBySort(){
                           },
                         );
                       },
-
-
                       );
                     }
                 )

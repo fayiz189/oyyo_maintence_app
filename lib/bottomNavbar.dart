@@ -1,14 +1,11 @@
 
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oyyo_maintence_app/Navpages/complaint.dart';
 import 'package:oyyo_maintence_app/Navpages/history.dart';
 import 'package:oyyo_maintence_app/Navpages/maintenanceList.dart';
-import 'package:oyyo_maintence_app/Navpages/stock.dart';
+import 'package:oyyo_maintence_app/Navpages/acccount.dart';
 import 'package:oyyo_maintence_app/const.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -163,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             _index = 2;
                             // _currentScreen = Expense();
-                            _currentScreen = Stock();
+                            _currentScreen =Account() ;
                           });
                         },
                         minWidth: scrWidth * 0.1,
@@ -172,13 +169,13 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             _index == 2
                                 ? SvgPicture.asset(
-                              "assets/images/stockicon.svg",
+                              "assets/images/AccountSel.svg",
                               height: size20,
                               width: size20,
                               color: mainColor,
                             )
                                 : SvgPicture.asset(
-                              "assets/images/stockicon.svg",
+                              "assets/images/AccountUnsel.svg",
                               height: size20,
                               width: size20,
                               color: Colors.grey,
@@ -187,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                               height: scrWidth * 0.02,
                             ),
                             Text(
-                              'STOCK',
+                              'ACCOUNT',
                               style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w500,
                                   fontSize: fontSize12,
