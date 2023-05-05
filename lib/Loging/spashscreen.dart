@@ -20,8 +20,10 @@ class _SplashState extends State<Splash> {
       var prefs = await SharedPreferences.getInstance();
       if (prefs.containsKey("uid")) {
         currentUserID=prefs.getString("uid")!;
+        currentUserName= prefs.getString("name")!;
         currentUserHeadId=prefs.getString("headId")!;
         print("id $currentUserID");
+         print("name $currentUserName");
         print("headId $currentUserHeadId");
         // print(prefs.get('email'));
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);

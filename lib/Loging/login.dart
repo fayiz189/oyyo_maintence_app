@@ -40,6 +40,9 @@ print("test");
       var prefs = await SharedPreferences.getInstance();
         prefs.setString('uid', users.docs[0].id);
         prefs.setString('headId', users.docs[0]['headId']);
+         prefs.setString('name', users.docs[0]['name']);
+         print( prefs.getString('name'));
+         print(" prefs.getString('name')");
 
 
       DocumentSnapshot data=users.docs[0];
@@ -47,6 +50,10 @@ print("test");
       currentUserID=data.id;
       currentUserName=data.get('name');
       currentUserHeadId = data.get('headId');
+      print(currentUserID);
+      print(currentUserEmail);
+      print(currentUserName);
+
       
       setState(() {
 

@@ -46,15 +46,32 @@ class _AccountState extends State<Account> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: size15, horizontal: size20),
-                child: Text(
-                  "Profile",
-                  style: GoogleFonts.lexend(
-                      fontWeight: FontWeight.w500,
-                      fontSize: fontSize20,
-                      color: Colors.white),
-                ),
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: size15, horizontal: size20),
+                    child: Text(
+                      "Profile",
+                      style: GoogleFonts.lexend(
+                          fontWeight: FontWeight.w500,
+                          fontSize: fontSize20,
+                          color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(width: scrWidth*0.4,),
+                  Icon(Icons.account_circle_sharp,color: Colors.white,),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: size15, horizontal: size20),
+                    child: Text(
+                      'Hi '  + currentUserName.toString() ,
+                      style: GoogleFonts.lexend(
+                          fontWeight: FontWeight.w500,
+                          fontSize: fontSize20,
+                          color: Colors.white),
+                    ),
+                  ),
+                ],
               ),
               Center(
                 child: Column(
@@ -204,7 +221,13 @@ class _AccountState extends State<Account> {
                                                 ),
                                               ),
                                             ),
-                                            onTap: () {
+                                            onTap: () async {
+                                              var prefs = await SharedPreferences.getInstance();
+                                              prefs.clear();
+                                              setState(() {
+
+                                              });
+
                                              Navigator.push(context, MaterialPageRoute(builder: (context) {
                                                return login();
                                              },));

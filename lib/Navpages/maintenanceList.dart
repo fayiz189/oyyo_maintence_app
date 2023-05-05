@@ -70,7 +70,13 @@ class _FirstPageState extends State<FirstPage> {
                         ),
                       );                    }
                     var data=snapshot.data!.docs;
-                    return ListView.builder(
+                    return data.isEmpty? Padding(
+                      padding: const EdgeInsets.only(top: 250),
+                      child: Center(child: Text('No Complaints Found',style: TextStyle(color: Colors.white,
+                      fontSize: 14),)),
+                    ):
+
+                      ListView.builder(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       itemCount:data.length,itemBuilder:(context, index) {
@@ -148,7 +154,12 @@ class _FirstPageState extends State<FirstPage> {
                                                       decoration: BoxDecoration(
                                                         shape: BoxShape.circle,
                                                       ),
-                                                      child: Image.network(data[index]['OwnerImage'],
+                                                      child: data[index]['OwnerImage'] == null ? Image.asset(
+                                                        'assets/images/noProfile.png',
+                                                        fit: BoxFit.cover,
+                                                      ):
+
+                                                      Image.network(data[index]['OwnerImage']
                                                       ),
                                                     ),
                                                   ),

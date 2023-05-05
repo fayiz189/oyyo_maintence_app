@@ -26,7 +26,8 @@ var result;
 
 getAll() {
   Stream stream =
-  FirebaseFirestore.instance.collection('complaints').where("staff",isEqualTo: currentUserID)
+  FirebaseFirestore.instance.collection('complaints').where("staff",isEqualTo: currentUserID).orderBy('createdDate',
+  descending: true)
       .where("status",whereIn: [4,5]).snapshots();
   return stream;
 }

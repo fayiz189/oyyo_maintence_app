@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:oyyo_maintence_app/Loging/login.dart';
 import 'package:oyyo_maintence_app/Navpages/maintenanceList.dart';
 import 'package:oyyo_maintence_app/Navpages/productWidget.dart';
+import 'package:oyyo_maintence_app/const.dart';
 import 'package:oyyo_maintence_app/main.dart';
 import 'package:oyyo_maintence_app/utils/audio_player.dart';
 import 'package:just_audio/just_audio.dart' as ap;
@@ -19,6 +20,8 @@ import 'dart:io';
 
 import 'package:oyyo_maintence_app/utils/showSnackbar.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
+
+import '../utils/Imageviewer.dart';
 
 class ComplaintsViewPage extends StatefulWidget {
   final String id;
@@ -39,7 +42,34 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
 
   final List _selectedImages = [];
 
-  Future<void> _pickImage() async {
+  Future<void> _pickImageCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      DocumentSnapshot id = await FirebaseFirestore.instance
+          .collection('settings')
+          .doc('settings')
+          .get();
+      id.reference.update({'imageId': FieldValue.increment(1)});
+
+      int imageId = id['imageId'];
+
+      imageId++;
+      var ref = FirebaseStorage.instance.ref().child('complaints/$imageId');
+      UploadTask uploadTask = ref.putFile(File(pickedFile.path));
+
+      await uploadTask.then((res) async {
+        imgUrl = (await ref.getDownloadURL()).toString();
+      });
+      setState(() {
+        imageupload=false;
+        _selectedImages.add(imgUrl);
+      });
+    }
+  }
+
+
+  Future<void> _pickImageGallery() async {
     final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -64,6 +94,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
       });
     }
   }
+
   List products = [];
   List<String> productsList = [];
 
@@ -73,6 +104,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
     where('headId',isEqualTo: currentUserHeadId ).snapshots().listen((event) {
 
       stockSnapshot=event;
+      productsList.clear();
+      products.clear();
       for(var doc in event.docs){
 
         products.add(doc.data());
@@ -226,7 +259,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        data!['flatName'].toUpperCase(),
+                                        data['flatName'].toUpperCase(),
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           color: Colors.white,
@@ -244,7 +277,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                  data!['floorName'],
+                                  data['floorName'],
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           color: Colors.white,
@@ -381,7 +414,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                             color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            fontSize: w*0.05),
+                                                            fontSize: w*0.04),
                                                       ),
                                                     ],
                                                   ),
@@ -397,7 +430,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                             color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            fontSize: w*0.05),
+                                                            fontSize: w*0.04),
                                                       ),
                                                     ],
                                                   ),
@@ -413,7 +446,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                             color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            fontSize: w*0.05),
+                                                            fontSize: w*0.04),
                                                       ),
                                                     ],
                                                   ),
@@ -449,11 +482,20 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                                       data['images']
                                                                           [index], fit: BoxFit.fitWidth,),
                                                                   onTap: () {
-                                                                    MultiImageProvider multiImageProvider =
-                                                                    MultiImageProvider(List.generate(data['images'].length,
-                                                                          (index) => Image.network(data['images'][index]).image,));
-                                                                    showImageViewerPager(context, multiImageProvider,
-                                                                        swipeDismissible: true, doubleTapZoomable: true);
+
+                                                                    final img = data['images'][index];
+
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              MyImage(imge: img),
+                                                                        ));
+                                                                    // MultiImageProvider multiImageProvider =
+                                                                    // MultiImageProvider(List.generate(data['images'].length,
+                                                                    //       (index) => Image.network(data['images'][index]).image,));
+                                                                    // showImageViewerPager(context, multiImageProvider,
+                                                                    //     swipeDismissible: true, doubleTapZoomable: true);
 
                                                                     // ImageViewer.showImageSlider(
                                                                     //   startingPosition: 1,
@@ -491,8 +533,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
 
                                           SizedBox(height: w*0.03,),
 
-                                      data['status'] == 4?
-                                      Container(
+                                      data['reRequest'] == true || data['status'] == 4  ? Container(
                                             height: w*0.38,
                                             width: w*0.8,
                                             decoration: BoxDecoration(
@@ -515,12 +556,23 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                         child: Image.network(
                                                             data['workerImage'][
                                                             index],fit: BoxFit.contain),
+
                                                         onTap: () {
-                                                          MultiImageProvider multiImageProvider =
-                                                          MultiImageProvider(List.generate( data['workerImage'].length,
-                                                                (index) => Image.network( data['workerImage'][index]).image,));
-                                                          showImageViewerPager(context, multiImageProvider,
-                                                              swipeDismissible: true, doubleTapZoomable: true);
+                                                          final img = data['workerImage'][index];
+
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    MyImage(imge: img),
+                                                              ));
+
+
+                                                          // MultiImageProvider multiImageProvider =
+                                                          // MultiImageProvider(List.generate( data['workerImage'].length,
+                                                          //       (index) => Image.network( data['workerImage'][index]).image,));
+                                                          // showImageViewerPager(context, multiImageProvider,
+                                                          //     swipeDismissible: true, doubleTapZoomable: true);
                                                         },
                                                       ),
                                                     )),
@@ -533,12 +585,12 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
-                                            height: w*0.3,
+
                                             child: ListView.builder(
                                                 shrinkWrap: true,
                                                 scrollDirection: Axis.vertical,
                                                 physics: BouncingScrollPhysics(),
-                                                itemCount: data!['audio'].length,
+                                                itemCount: data['audio'].length,
                                                 itemBuilder: (context, index) {
                                                   return Padding(
                                                     padding:
@@ -578,62 +630,108 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
 
                                         data['status'] == 3 ?  Padding(
                                             padding: const EdgeInsets.all(20.0),
-                                            child: Row(
+                                            child: Column(
                                               children: [
-                                                Container(
-                                                  height: w*0.3,
-                                                  width: w*0.60,
-                                                  decoration: BoxDecoration(
-                                                      color: mainColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12)),
-                                                  child: ListView.builder(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      shrinkWrap: true,
-                                                      itemCount:
-                                                          _selectedImages.length,
-                                                      itemBuilder:
-                                                          (context, index) =>
-                                                              Container(
-                                                                height: w*0.3,
-                                                                width: w*0.3,
-                                                                 // color: Colors.red,
-                                                                child: InkWell(
-                                                                  child: Image.network(
-                                                                      _selectedImages[
-                                                                          index],fit: BoxFit.fitHeight),
-                                                                  onTap: () {
-                                                                    MultiImageProvider multiImageProvider =
-                                                                    MultiImageProvider(List.generate( _selectedImages.length,
-                                                                          (index) => Image.network( _selectedImages[index]).image,));
-                                                                    showImageViewerPager(context, multiImageProvider,
-                                                                        swipeDismissible: true, doubleTapZoomable: true);
-                                                                  },
-                                                                ),
-                                                              )),
-                                                ),
-                                                SizedBox(
-                                                  width: w * 0.04,
-                                                ),
-                                              imageupload==true? CircularProgressIndicator():
-                                             InkWell(
-                                                  onTap: () {
-                                                    imageupload=true;
-                                                    setState(() {
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    imageupload==true? CircularProgressIndicator():
+                                                    InkWell(
+                                                      onTap: () {
+                                                        imageupload=true;
+                                                        setState(() {
 
-                                                    });
-                                                    _pickImage();
-                                                  },
-                                                  child: CircleAvatar(
-                                                    radius: w*0.075,
-                                                    backgroundColor: mainColor,
-                                                    child: SvgPicture.asset(
-                                                        'assets/images/camIcon.svg',
-                                                        color: Colors.white,
-                                                        height: w * 0.05),
-                                                  ),
+                                                        });
+                                                        _pickImageCamera();
+                                                      },
+                                                      child: CircleAvatar(
+                                                        radius: w*0.075,
+                                                        backgroundColor: mainColor,
+                                                        child: SvgPicture.asset(
+                                                            'assets/images/camIcon.svg',
+                                                            color: Colors.white,
+                                                            height: w * 0.05),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: scrWidth* 0.05,),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        imageupload=true;
+                                                        setState(() {
+
+                                                        });
+                                                        _pickImageGallery();
+                                                      },
+                                                      child: CircleAvatar(
+                                                        radius: w*0.075,
+                                                        backgroundColor: mainColor,
+                                                        child: Icon(Icons.file_upload_outlined,color: Colors.white,),
+                                                      ),
+                                                    ),
+
+                                                  ],
+                                                ),
+                                                SizedBox(height: scrWidth*0.07,),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 19),
+                                                  child:  Wrap(
+                                                      children: List.generate(
+                                                          _selectedImages.length,
+                                                              (index) {
+                                                            final img = _selectedImages[index];
+                                                            return InkWell(
+                                                              onTap: () {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          MyImage(imge: img),
+                                                                    ));
+                                                              },
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(15),
+                                                                child:
+                                                                Stack(
+                                                                  clipBehavior: Clip.none,
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 70,
+                                                                      width: 80,
+                                                                      child:
+                                                                      Image.network(
+                                                                        _selectedImages[index],
+                                                                        fit: BoxFit.cover,),
+                                                                    ),
+                                                                    Positioned(
+                                                                        bottom: 60,
+                                                                        left: 70,
+                                                                        child: InkWell(
+                                                                          onTap: () async {
+                                                                            bool proceed = await alert(
+                                                                                context, 'Do You want to delete this image');
+                                                                            if (proceed) {
+                                                                              setState(() {
+                                                                                _selectedImages.removeAt(index);
+
+                                                                              });
+                                                                              showUploadMessage(context, 'image deleted');
+
+                                                                            }
+
+
+
+                                                                          },
+                                                                          child: CircleAvatar(
+                                                                              backgroundColor: Colors.grey,
+                                                                              radius: 10,
+                                                                              child: Icon(Icons.close,color: Colors.red,size: 15,)),
+                                                                        )),
+
+                                                                  ],
+                                                                ) ,
+                                                              ),
+                                                            );
+                                                          })),
                                                 ),
                                               ],
                                             ),
@@ -858,7 +956,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                               ),
                                               SizedBox(height: w*0.025,),
 
-                                              Container(
+                                              inventoryList!.docs.isEmpty ? SizedBox():      Container(
                                                 decoration: BoxDecoration(
                                                   color: mainColor,
                                                   borderRadius: BorderRadius.circular(20)
