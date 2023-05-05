@@ -51,20 +51,7 @@ class _AccountState extends State<Account> {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: size15, horizontal: size20),
                     child: Text(
-                      "Profile",
-                      style: GoogleFonts.lexend(
-                          fontWeight: FontWeight.w500,
-                          fontSize: fontSize20,
-                          color: Colors.white),
-                    ),
-                  ),
-                  SizedBox(width: scrWidth*0.4,),
-                  Icon(Icons.account_circle_sharp,color: Colors.white,),
-
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: size15, horizontal: size20),
-                    child: Text(
-                      'Hi '  + currentUserName.toString() ,
+                      "PROFILE",
                       style: GoogleFonts.lexend(
                           fontWeight: FontWeight.w500,
                           fontSize: fontSize20,
@@ -73,6 +60,27 @@ class _AccountState extends State<Account> {
                   ),
                 ],
               ),
+
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: size15, horizontal: size20),
+                    child: Icon(Icons.account_circle_sharp,color: Colors.white,),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: size15,),
+                    child: Text(
+                      'Hi '  + currentUserName.toString() ,
+                      style: GoogleFonts.lexend(
+                          fontWeight: FontWeight.w500,
+                          fontSize: fontSize15,
+                          color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+
+
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

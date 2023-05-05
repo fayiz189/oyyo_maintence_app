@@ -40,8 +40,8 @@ print("test");
       var prefs = await SharedPreferences.getInstance();
         prefs.setString('uid', users.docs[0].id);
         prefs.setString('headId', users.docs[0]['headId']);
-         prefs.setString('name', users.docs[0]['name']);
-         print( prefs.getString('name'));
+         // prefs.setString('name', users.docs[0]['name']);
+         // print( prefs.getString('name'));
          print(" prefs.getString('name')");
 
 
@@ -255,6 +255,8 @@ print("test");
                     //   ),
                     //
                     // ),
+                          Center(child: Text("V.1.0.0",style: TextStyle(color: Colors.grey),))
+
 
                         ]
                     )

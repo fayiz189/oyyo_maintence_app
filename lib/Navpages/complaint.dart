@@ -367,7 +367,8 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                           padding: EdgeInsetsDirectional.fromSTEB(
                                               w*0.02, 0, 0, 0),
                                           child: Text(
-                                            'Created Date : ${DateFormat('dd-MM-yyyy').format(data['createdDate'].toDate()).toString()}',
+                                            'Created Date : ${DateFormat('dd-MM-yyyy').format(
+                                                data['createdDate'].toDate()).toString()}',
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
@@ -434,6 +435,19 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                       ),
                                                     ],
                                                   ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'Created Date : ${DateFormat('dd-MM-yyyy').format(
+                                                            data['createdDate'].toDate()).toString()}',
+                                                        style: GoogleFonts.inter(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                            FontWeight.w500,
+                                                            fontSize: w*0.04),
+                                                      ),
+                                                    ],
+                                                  ),
                                                   SizedBox(
                                                     height: 15,
                                                   ),
@@ -459,7 +473,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                   Wrap(
                                                     children: [
                                                       Container(
-                                                        height: w*0.4,
+                                                        height: w*0.27,
                                                         width: w*0.8,
                                                         child: ListView.builder(
                                                           scrollDirection:
@@ -940,7 +954,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                   }
                                                   else {
 
-                                                showUploadErrorMessage(context, 'xxx');
+                                                showUploadErrorMessage(context, 'Please choose quantity');
                                                 setState(() {
 
                                                 });
@@ -1180,14 +1194,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                               Navigator.pop(context);
 
                                                             }
-
-
                                                           }
-
-
-
-
-
                                                       },
                                                     )
                                                   : SizedBox(),
