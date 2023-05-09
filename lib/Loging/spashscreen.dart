@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:oyyo_maintence_app/Loging/login.dart';
+import 'package:oyyo_maintence_app/Navpages/history.dart';
 import 'package:oyyo_maintence_app/bottomNavbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,9 +39,31 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Center(
-        child:CircularProgressIndicator(
-        ),
+      backgroundColor:mainColor,
+      body: Column(
+
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height*0.35,
+               width:MediaQuery.of(context).size.width*0.45 ,
+               decoration: BoxDecoration(
+                 image: DecorationImage(
+                   image: AssetImage(
+                       'assets/images/oyyologo.png',
+                   ),fit: BoxFit.contain
+                 )
+               ),
+
+              ),
+            ],
+          ),
+           CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        ],
       ),
     );
   }

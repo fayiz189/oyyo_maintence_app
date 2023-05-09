@@ -396,7 +396,7 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            height: w*0.8,
+                                            // height: w*0.8,
                                             width: double.infinity,
                                             decoration: BoxDecoration(
                                                 borderRadius:
@@ -435,11 +435,14 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                       ),
                                                     ],
                                                   ),
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        'Created Date : ${DateFormat('dd-MM-yyyy').format(
-                                                            data['createdDate'].toDate()).toString()}',
+                                                        'Scheduled Date : ${DateFormat('dd-MM-yyyy').format(
+                                                            data['scheduledDate'].toDate()).toString()}',
                                                         style: GoogleFonts.inter(
                                                             color: Colors.white,
                                                             fontWeight:
@@ -473,11 +476,19 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                   Wrap(
                                                     children: [
                                                       Container(
-                                                        height: w*0.27,
+                                                        // height: w*0.27,
                                                         width: w*0.8,
-                                                        child: ListView.builder(
-                                                          scrollDirection:
-                                                              Axis.horizontal,
+                                                        child: GridView.builder(
+                                                          physics: NeverScrollableScrollPhysics(),
+                                                          shrinkWrap: true,
+                                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                            crossAxisCount: 3,
+                                                            childAspectRatio: 0.8,
+                                                           crossAxisSpacing: 7,
+                                                            mainAxisSpacing: 8
+                                                          ),
+                                                          // scrollDirection:
+                                                          //     Axis.horizontal,
                                                           itemCount:
                                                               data['images']
                                                                   .length,
@@ -488,13 +499,14 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                                   const EdgeInsets
                                                                       .all(8.0),
                                                               child: Container(
-                                                                height: w*0.02,
-                                                                width:w*0.4,
-                                                                 // decoration: BoxDecoration(borderRadius:BorderRadius.circular(20),),
+                                                                 color: Colors.grey.shade600,
+                                                                // height: w*0.05,
+                                                                // width:w*0.8,
+                                                                //   decoration: BoxDecoration(borderRadius:BorderRadius.circular(20),),
                                                                 child: InkWell(
                                                                   child: Image.network(
                                                                       data['images']
-                                                                          [index], fit: BoxFit.fitWidth,),
+                                                                          [index], fit: BoxFit.fill,),
                                                                   onTap: () {
 
                                                                     final img = data['images'][index];
@@ -548,14 +560,20 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                           SizedBox(height: w*0.03,),
 
                                       data['reRequest'] == true || data['status'] == 4  ? Container(
-                                            height: w*0.38,
+                                            height: w*0.4,
                                             width: w*0.8,
                                             decoration: BoxDecoration(
                                                 color: mainColor,
                                                 borderRadius:
                                                 BorderRadius.circular(
                                                     12)),
-                                            child: ListView.builder(
+                                            child: GridView.builder(
+                                              gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  childAspectRatio: 0.9,
+                                                  crossAxisSpacing: 6,
+                                                  mainAxisSpacing: 8
+                                              ) ,
                                                 scrollDirection:
                                                 Axis.horizontal,
                                                 shrinkWrap: true,
@@ -563,31 +581,34 @@ class _ComplaintsViewPageState extends State<ComplaintsViewPage> {
                                                 data['workerImage'].length,
                                                 itemBuilder:
                                                     (context, index) =>
-                                                    Container(
-                                                      height: w*0.1,
-                                                      width: w*0.3,
-                                                      child: InkWell(
-                                                        child: Image.network(
-                                                            data['workerImage'][
-                                                            index],fit: BoxFit.contain),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Container(
+                                                        // color: Colors.grey.shade600,
+                                                        // height: w*0.1,
+                                                        // width: w*0.3,
+                                                        child: InkWell(
+                                                          child: Image.network(
+                                                              data['workerImage'][
+                                                              index],fit: BoxFit.contain),
+                                                          onTap: () {
+                                                            final img = data['workerImage'][index];
 
-                                                        onTap: () {
-                                                          final img = data['workerImage'][index];
-
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    MyImage(imge: img),
-                                                              ));
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      MyImage(imge: img),
+                                                                ));
 
 
-                                                          // MultiImageProvider multiImageProvider =
-                                                          // MultiImageProvider(List.generate( data['workerImage'].length,
-                                                          //       (index) => Image.network( data['workerImage'][index]).image,));
-                                                          // showImageViewerPager(context, multiImageProvider,
-                                                          //     swipeDismissible: true, doubleTapZoomable: true);
-                                                        },
+                                                            // MultiImageProvider multiImageProvider =
+                                                            // MultiImageProvider(List.generate( data['workerImage'].length,
+                                                            //       (index) => Image.network( data['workerImage'][index]).image,));
+                                                            // showImageViewerPager(context, multiImageProvider,
+                                                            //     swipeDismissible: true, doubleTapZoomable: true);
+                                                          },
+                                                        ),
                                                       ),
                                                     )),
                                           ) :SizedBox(),
